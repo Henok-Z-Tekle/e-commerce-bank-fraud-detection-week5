@@ -182,18 +182,4 @@ matplotlib
 
 seaborn
 
-## 8. Task-2 Completion Status (Rubric Check)
-Section	Status
-Task 2a – Data Prep & Baseline	✅ Fully Met
-Task 2b – Ensemble & CV	✅ Fully Met
-Repository Best Practices	✅ High
-Code Best Practices	✅ High
-9. Next Steps (Task 3 Preview)
 
-Apply SHAP explainability to the selected Random Forest model
-
-Compare feature importance across models
-
-Translate technical findings into business-level insights
-
-Provide fraud mitigation recommendations
