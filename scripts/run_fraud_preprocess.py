@@ -1,5 +1,10 @@
 ﻿import argparse
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from src.cleaning import clean_creditcard_data, clean_fraud_data
 from src.eda import plot_bivariate, plot_class_distribution, plot_univariate

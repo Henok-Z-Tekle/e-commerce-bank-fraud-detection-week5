@@ -22,17 +22,20 @@ def add_user_velocity_features(df, user_col="user_id", time_col="purchase_time",
     df = ensure_datetime(df, [time_col])
     df["_row_id"] = df.index
     df = df.sort_values([user_col, time_col])
+    if isinstance(window, str):
+        window = window.replace("H", "h")
 
+    df = df.set_index(time_col)
     counts = (
-        df.groupby(user_col)
-        .rolling(window=window, on=time_col)[time_col]
+        df.groupby(user_col)[user_col]
+        .rolling(window=window, min_periods=1)
         .count()
         .reset_index(level=0, drop=True)
     )
 
     window_hours = pd.Timedelta(window).total_seconds() / 3600
-    df["txn_count_window"] = counts.fillna(0).astype(int)
-    df["txn_velocity_per_hour"] = counts.fillna(0) / window_hours
+    df["txn_count_window"] = counts.to_numpy()
+    df["txn_velocity_per_hour"] = df["txn_count_window"] / window_hours
 
-    df = df.sort_values("_row_id").drop(columns=["_row_id"])
+    df = df.reset_index().sort_values("_row_id").drop(columns=["_row_id"])
     return df
