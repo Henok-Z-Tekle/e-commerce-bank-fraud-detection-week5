@@ -1,36 +1,90 @@
-﻿# E-Commerce & Bank Fraud Detection
+## Task 3 – Model Explainability (SHAP Analysis)
+Objective
 
-This repository contains data cleaning, exploratory analysis, feature engineering, and preprocessing utilities for two fraud datasets: `Fraud_Data.csv` (e-commerce) and `creditcard.csv` (banking). The goal is to prepare clean, feature-rich data for modeling while documenting class imbalance and geolocation patterns.
+The goal of Task 3 is to interpret and explain the predictions of the final fraud detection model using SHAP (SHapley Additive exPlanations). This task focuses on understanding why the model flags transactions as fraudulent and translating those insights into actionable business recommendations.
 
-## Business Context
-Fraud detection requires reliable signals from transactional behavior, device/identity metadata, and geography. This project focuses on:
-- Cleaning and validating raw transaction data.
-- Exploring distributions and relationships with the target label.
-- Engineering time-based and velocity features to capture user behavior.
-- Integrating IP geolocation to identify country-level risk patterns.
-- Scaling/encoding data and handling class imbalance on training data only.
+Explainability is critical in fintech systems to:
 
-## Repository Structure
-- `data/` raw datasets (excluded from version control by default).
-- `notebooks/` analysis notebooks.
-- `scripts/` runnable workflows.
-- `src/` reusable preprocessing modules.
-- `tests/` unit tests.
+Build trust with stakeholders
 
-## Setup
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+Support regulatory compliance
 
-## Run Preprocessing
-```bash
-python scripts/run_fraud_preprocess.py \
-  --fraud-path data/Fraud_Data.csv \
-  --creditcard-path data/creditcard.csv \
-  --ip-path data/IpAddress_to_Country.csv \
-  --output-dir data/processed
-```
+Balance fraud prevention with customer experience
 
-Outputs are written to `data/processed/`.
+Contents
+task-3/
+│
+├── shap_analysis.ipynb
+├── feature_importance.ipynb
+├── images/
+│   ├── shap_summary.png
+│   ├── shap_tp.png
+│   ├── shap_fp.png
+│   └── shap_fn.png
+└── README.md
+
+Steps Completed
+1. Feature Importance (Baseline)
+
+Extracted built-in feature importance from the final ensemble model
+
+Visualized the top 10 most influential features
+
+Used as a baseline comparison against SHAP values
+
+2. SHAP Analysis
+Global Explainability
+
+Generated a SHAP Summary Plot
+
+Identified globally important fraud drivers
+
+Observed how feature values influence fraud likelihood
+
+Local Explainability
+
+Generated SHAP Force Plots for:
+
+True Positive: Correctly identified fraud
+
+False Positive: Legitimate transaction flagged as fraud
+
+False Negative: Fraud transaction missed by the model
+
+These plots explain individual predictions at transaction level.
+
+3. Interpretation
+
+Compared SHAP importance with built-in feature importance
+
+Identified the top 5 fraud drivers
+
+Analyzed unexpected or counterintuitive patterns
+
+4. Business Recommendations
+
+Based on SHAP insights, the following recommendations were derived:
+
+Enhanced verification for high-risk behavioral patterns
+
+Time-based fraud controls
+
+Country-aware risk scoring strategies
+
+Each recommendation is directly linked to SHAP findings.
+
+Tools & Libraries
+
+Python
+
+SHAP
+
+Scikit-learn
+
+XGBoost / Random Forest
+
+Matplotlib / Seaborn
+
+Outcome
+
+This task ensures the fraud detection system is transparent, explainable, and business-aligned, enabling informed decision-making and responsible AI deployment.
